@@ -27,6 +27,7 @@ def ouvir_microfone():
 		print("Diga alguma coisa: ")
 		#Armazena a informacao de audio na variavel
 		audio = microfone.listen(source)
+		print('Só um momento...')
 
 
 	try:
@@ -37,7 +38,7 @@ def ouvir_microfone():
 		#----------------------------------------------------------------------------------------------
 
 		# função responsavel pelo chat gpt
-		openai.api_key = ("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")
+		openai.api_key = ("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")
 		# Set the model and prompt
 		model_engine = "text-davinci-003"
 		# Set the maximum number of tokens to generate in the response
@@ -63,12 +64,14 @@ def ouvir_microfone():
 
 
 while True:
-	frase = ouvir_microfone()
-
-	if frase == 'sair':
-		break
-	else:
-		cria_audio(frase)
+	try:
+		frase = ouvir_microfone()
+		if frase == 'sair':
+			break
+		else:
+			cria_audio(frase)
+	except:
+		pass
 
 
 
