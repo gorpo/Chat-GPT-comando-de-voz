@@ -1,0 +1,74 @@
+import speech_recognition as sr
+from gtts import gTTS
+from preferredsoundplayer import playsound
+import openai
+
+
+#Funcao responsavel por falar
+def cria_audio(audio):
+	tts = gTTS(audio,lang='pt-br')
+	#Salva o arquivo de audio
+	tts.save('hello.mp3')
+	#print("Estou aprendendo o que você disse...")
+	#Da play ao audio
+	playsound('hello.mp3')
+
+
+#Funcao responsavel por ouvir e reconhecer a fala
+def ouvir_microfone():
+
+	#Habilita o microfone para ouvir o usuario
+	microfone = sr.Recognizer()
+
+	with sr.Microphone() as source:
+		#Chama a funcao de reducao de ruido disponivel na speech_recognition
+		microfone.adjust_for_ambient_noise(source)
+		#Avisa ao usuario que esta pronto para ouvir
+		print("Diga alguma coisa: ")
+		#Armazena a informacao de audio na variavel
+		audio = microfone.listen(source)
+
+
+	try:
+		#Passa o audio para o reconhecedor de padroes do speech_recognition
+		frase = microfone.recognize_google(audio,language='pt-BR')
+		#Após alguns segundos, retorna a frase falada
+		print("Você disse: " + frase)#Caso nao tenha reconhecido o padrao de fala, exibe esta mensagem
+		#----------------------------------------------------------------------------------------------
+
+		# função responsavel pelo chat gpt
+		openai.api_key = ("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")
+		# Set the model and prompt
+		model_engine = "text-davinci-003"
+		# Set the maximum number of tokens to generate in the response
+		max_tokens = 1024
+		# Generate a response
+		completion = openai.Completion.create(
+			engine=model_engine,
+			prompt=frase,
+			max_tokens=max_tokens,
+			temperature=0.5,
+			top_p=1,
+			frequency_penalty=0,
+			presence_penalty=0
+		)
+		# Print the response
+		resposta = completion.choices[0].text
+		print(resposta)
+
+	except sr.UnkownValueError:
+		print("Não entendi")
+
+	return resposta
+
+
+while True:
+	frase = ouvir_microfone()
+
+	if frase == 'sair':
+		break
+	else:
+		cria_audio(frase)
+
+
+
