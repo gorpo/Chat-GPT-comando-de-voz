@@ -11,7 +11,7 @@ def cria_audio(audio):
 	tts.save('hello1.mp3')
 	#print("Estou aprendendo o que você disse...")
 	#Da play ao audio
-	playsound('hello1.mp3')
+	playsound('hello.mp3')
 
 
 #Funcao responsavel por ouvir e reconhecer a fala
@@ -37,30 +37,11 @@ def ouvir_microfone():
 		print("Você disse: " + frase)#Caso nao tenha reconhecido o padrao de fala, exibe esta mensagem
 		#----------------------------------------------------------------------------------------------
 
-		# função responsavel pelo chat gpt
-		openai.api_key = ("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")
-		# Set the model and prompt
-		model_engine = "text-davinci-003"
-		# Set the maximum number of tokens to generate in the response
-		max_tokens = 1024
-		# Generate a response
-		completion = openai.Completion.create(
-			engine=model_engine,
-			prompt=frase,
-			max_tokens=max_tokens,
-			temperature=0.5,
-			top_p=1,
-			frequency_penalty=0,
-			presence_penalty=0
-		)
-		# Print the response
-		resposta = completion.choices[0].text
-		print(resposta)
 
 	except sr.UnkownValueError:
 		print("Não entendi")
 
-	return resposta
+	return frase
 
 
 while True:
