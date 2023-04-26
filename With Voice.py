@@ -38,7 +38,7 @@ def ouvir_microfone():
 		#----------------------------------------------------------------------------------------------
 
 		# função responsavel pelo chat gpt
-		openai.api_key = ("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")
+		openai.api_key = ("your key")
 		# Set the model and prompt
 		model_engine = "text-davinci-003"
 		# Set the maximum number of tokens to generate in the response
